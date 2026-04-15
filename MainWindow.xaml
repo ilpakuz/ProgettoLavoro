@@ -1,13 +1,19 @@
 ﻿<Window x:Class="ProgettoLavoro.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tris" Height="650" Width="550"
+        Title="Tris Notte Stellata Deluxe" 
+        WindowState="Maximized" WindowStyle="None" 
         Background="#1A2B3C">
+    <!-- Sfondo blu scuro della finestra -->
+
     <Window.Resources>
-        <!-- Stile per i Pulsanti della Griglia -->
+        <!-- DEFINIZIONE DEGLI STILI GRAFICI -->
+
+        <!-- Stile per i pulsanti della griglia di gioco (3x3 ) -->
         <Style TargetType="Button">
             <Setter Property="Background">
                 <Setter.Value>
+                    <!-- Sfumatura di colore per un effetto moderno -->
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#2C3E50" Offset="0"/>
                         <GradientStop Color="#34495E" Offset="1"/>
@@ -18,14 +24,11 @@
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="FontSize" Value="70"/>
             <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="Foreground" Value="#ECF0F1"/>
             <Setter Property="Margin" Value="6"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="5" BlurRadius="10" Opacity="0.5"/>
-                </Setter.Value>
-            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
+                    <!-- Template per rendere i pulsanti arrotondati -->
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -33,23 +36,13 @@
                                 CornerRadius="20">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" Value="#5DADE2"/>
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect Color="#5DADE2" Direction="320" ShadowDepth="7" BlurRadius="15" Opacity="0.7"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <!-- Stile per il Pulsante Nuova Partita -->
-        <Style x:Key="StilePulsanteNuovaPartita" TargetType="Button">
+        <!-- Stile per i pulsanti di azione (Inizia, Nuova Partita, Esci) -->
+        <Style x:Key="StilePulsanteAzione" TargetType="Button">
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -61,53 +54,101 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="22"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Padding" Value="20,10"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="12">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="18,10"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect Color="#34D058" Direction="320" ShadowDepth="6" BlurRadius="12" Opacity="0.8"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Stile per i campi di testo (nomi giocatori) -->
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="#2C3E50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#4A627A"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="25">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <!-- SCHERMATA INIZIALE (Menu) -->
+        <Grid x:Name="schermataIniziale" Visibility="Visible">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="TRIS" FontSize="72" FontWeight="Black" Foreground="#BBDEFB" HorizontalAlignment="Center" Margin="0,0,0,40"/>
 
-        <Button x:Name="pulsante0_0" Grid.Row="0" Grid.Column="0" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante0_1" Grid.Row="0" Grid.Column="1" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante0_2" Grid.Row="0" Grid.Column="2" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante1_0" Grid.Row="1" Grid.Column="0" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante1_1" Grid.Row="1" Grid.Column="1" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante1_2" Grid.Row="1" Grid.Column="2" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante2_0" Grid.Row="2" Grid.Column="0" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante2_1" Grid.Row="2" Grid.Column="1" Click="GestisciClickPulsante"/>
-        <Button x:Name="pulsante2_2" Grid.Row="2" Grid.Column="2" Click="GestisciClickPulsante"/>
+                <TextBlock Text="Nome Giocatore X:" FontSize="20" Foreground="#BBDEFB" Margin="0,10"/>
+                <TextBox x:Name="inputNomeGiocatoreX" Width="300" Text="Giocatore 1"/>
 
-        <TextBlock x:Name="testoStatoGioco" Grid.Row="3" Grid.ColumnSpan="3" FontSize="28" FontWeight="Bold" Foreground="#BBDEFB" TextAlignment="Center" Margin="15"/>
-        <Button x:Name="pulsanteNuovaPartita" Grid.Row="4" Grid.ColumnSpan="3" Content="Nuova Partita" Click="AvviaNuovaPartita" Style="{StaticResource StilePulsanteNuovaPartita}"/>
+                <TextBlock Text="Nome Giocatore O:" FontSize="20" Foreground="#BBDEFB" Margin="0,10"/>
+                <TextBox x:Name="inputNomeGiocatoreO" Width="300" Text="Giocatore 2"/>
+
+                <Button Content="INIZIA SFIDA" Style="{StaticResource StilePulsanteAzione}" Click="IniziaPartita_Click" Margin="0,40,0,0" Width="200"/>
+                <Button Content="Esci" Click="Esci_Click" Background="Transparent" BorderThickness="0" Foreground="#4A627A" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- SCHERMATA DI GIOCO -->
+        <Grid x:Name="schermataGioco" Visibility="Collapsed" Margin="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Riga Punteggio -->
+                <RowDefinition Height="*"/>
+                <!-- Riga 1 Griglia -->
+                <RowDefinition Height="*"/>
+                <!-- Riga 2 Griglia -->
+                <RowDefinition Height="*"/>
+                <!-- Riga 3 Griglia -->
+                <RowDefinition Height="Auto"/>
+                <!-- Riga Stato -->
+                <RowDefinition Height="Auto"/>
+                <!-- Riga Azioni -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Visualizzazione Punteggio e Nomi -->
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,30">
+                <TextBlock x:Name="testoPunteggioX" Text="Giocatore 1: 0" FontSize="24" Foreground="#90CAF9" Margin="0,0,50,0" FontWeight="Bold"/>
+                <TextBlock x:Name="testoPunteggioO" Text="Giocatore 2: 0" FontSize="24" Foreground="#EF5350" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- Griglia dei Pulsanti -->
+            <Button x:Name="pulsante0_0" Grid.Row="1" Grid.Column="0" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante0_1" Grid.Row="1" Grid.Column="1" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante0_2" Grid.Row="1" Grid.Column="2" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante1_0" Grid.Row="2" Grid.Column="0" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante1_1" Grid.Row="2" Grid.Column="1" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante1_2" Grid.Row="2" Grid.Column="2" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante2_0" Grid.Row="3" Grid.Column="0" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante2_1" Grid.Row="3" Grid.Column="1" Click="GestisciClickPulsante"/>
+            <Button x:Name="pulsante2_2" Grid.Row="3" Grid.Column="2" Click="GestisciClickPulsante"/>
+
+            <!-- Messaggio di stato (Turno/Vittoria) -->
+            <TextBlock x:Name="testoStatoGioco" Grid.Row="4" Grid.ColumnSpan="3" FontSize="28" Foreground="#BBDEFB" TextAlignment="Center" Margin="20" FontWeight="Bold"/>
+
+            <!-- Pulsanti per Nuova Partita o Menu -->
+            <StackPanel Grid.Row="5" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Nuova Partita" Click="AvviaNuovaPartita" Style="{StaticResource StilePulsanteAzione}" Margin="10"/>
+                <Button Content="Torna al Menu" Click="TornaAlMenu_Click" Margin="10" Background="#34495E" Foreground="White" BorderThickness="0" Padding="15,5"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
